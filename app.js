@@ -122,3 +122,32 @@ function stopGame() {
 	stopButton.classList.add('hide');
 	clearInterval(timerID);
 }
+
+ function createBoard() {
+	for (let index = 0; index < cardsArray.length; index++) {
+		const cardContainer = document.createElement('div');
+		const cardBack = document.createElement('div');
+		const cardFront = document.createElement('div');
+		const cardImage = document.createElement('img');
+		
+		cardBack.innerHTML = '?'
+		
+		cardContainer.classList.add('card-container');
+		cardBack.classList.add('card-backside');
+		cardFront.classList.add('card-frontside');
+		cardImage.classList.add('card-image');
+		cardContainer.setAttribute('data-id', index);
+		cardImage.setAttribute('src', `${cardsArray[index].img}`);
+
+		
+		gameContainer.appendChild(cardContainer);
+		cardContainer.appendChild(cardBack);
+		cardContainer.appendChild(cardFront);
+		cardFront.appendChild(cardImage);
+	}
+
+	cards = document.querySelectorAll('.card-container');
+	cards.forEach((card) => {
+	card.addEventListener('click', flipCard)
+})
+}
