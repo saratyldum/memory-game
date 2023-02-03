@@ -22,10 +22,9 @@ button {
 }
 
 .wrapper {
-	position: relative;
 	width: 80vw;
 	max-width: 500px;
-	padding: 2.5rem 3rem;
+	padding: 2.5rem 2rem;
 	background-color: white;
 	border-radius: 1rem;
 	box-shadow: 0 1rem 3rem rgba(13, 86, 0, 1);
@@ -40,6 +39,7 @@ button {
 	position: relative; 
 	width: 100%;
 	gap: 1rem;
+	grid-template-columns: repeat(3, auto);
 }
 
 .information-container {
