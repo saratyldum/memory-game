@@ -6,7 +6,8 @@ const startButton = document.querySelector('.start-button');
 const result = document.querySelector('#result');
 const controls = document.querySelector('.controls-container');
 
-const cardsWon = [];
+let board;
+let cardsWon = [];
 let cardChosen = [];
 let cardsChosenID = [];
 let cards;
@@ -16,6 +17,7 @@ let seconds = 0;
 let minutes = 0;
 //starter moves
 let moveCounter = 0;
+
 
 const cardsArray = [
 	{
@@ -79,3 +81,44 @@ const cardsArray = [
 		category: 'animals',
 	},
 ];
+
+//start game
+startButton.addEventListener('click', handleStartButtonClick);
+stopButton.addEventListener('click', handleStopButtonClick);
+
+function handleStartButtonClick() {
+	initializeGame();
+}
+
+function handleStopButtonClick() {
+	stopGame();
+}
+
+function initializeGame() {
+	gameContainer.innerHTML = "";
+	result.innerHTML = "";
+	moveCounter = 0;
+	seconds = 0;
+	minutes = 0;
+	controls.classList.add('hide');
+	startButton.classList.add('hide')
+	stopButton.classList.remove('hide');
+
+	//start timer
+	timerID = setInterval(updateTimer, 1000);
+
+	//initial moves
+	moves.innerHTML = `<span>Moves:</span> ${moveCounter}`;
+	time.innerHTML = `<span>Time:</span> 00:00`;
+
+	cardsArray.sort(() => 0.5 - Math.random());
+	createBoard();
+}
+
+function stopGame() {
+	cardsWon = [];
+	controls.classList.remove('hide');
+	startButton.classList.remove('hide')
+	stopButton.classList.add('hide');
+	clearInterval(timerID);
+}
