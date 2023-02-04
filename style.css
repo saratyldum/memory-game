@@ -24,7 +24,8 @@ button {
 .wrapper {
 	width: 80vw;
 	max-width: 500px;
-	padding: 2.5rem 2rem;
+	min-width: 300px;
+	padding: 2.5rem 1.5rem;
 	background-color: white;
 	border-radius: 1rem;
 	box-shadow: 0 1rem 3rem rgba(13, 86, 0, 1);
@@ -40,6 +41,7 @@ button {
 	width: 100%;
 	gap: 1rem;
 	grid-template-columns: repeat(3, auto);
+	perspective: 800px;
 }
 
 .information-container {
@@ -53,11 +55,20 @@ button {
 
 .card-container {
 	position: relative;
-	width: 7rem;
-	height: 7rem;
+	max-width: 8em;
+	max-height: 8em;
+	width: 20vw;
+	height: 20vw;
 	cursor: pointer;
 	margin: 0 auto;
+	transform-style: preserve-3d;
+	transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+/* .card-container:focus, .card-container:hover {
+	outline: 5px solid black;
+	transition: outline 100ms ease;
+} */
 
 .card-backside, .card-frontside, .card-image {
 	position: absolute;
@@ -68,7 +79,6 @@ button {
 	align-items: center;
 	justify-content: center;
 	border: 3px solid black;
-	transition: transform 0.5s ease; 
 	backface-visibility: hidden;
 }
 
@@ -82,6 +92,10 @@ button {
 	background-color: white;
 	transform:rotateY(180deg)
 } 
+
+.flipCard {
+	transform: rotateY(180deg);
+}
 
 .card-image {
 	padding: 0.2rem;
