@@ -162,4 +162,29 @@ function stopGame() {
 	}
 }
 
+function checkMatch() {
+	 firstCard = cardsChosenID[0];
+	 secondCard = cardsChosenID[1];
 
+	 if (firstCard === secondCard) {
+		cards[firstCard].classList.remove('flipCard');
+		cards[secondCard].classList.remove('flipCard');  
+	 }
+
+	 if (cardChosen[0] === cardChosen[1]) {
+		cardsWon.push(cardChosen)
+		movesCounter()
+	 } else  {
+		cards[firstCard].classList.remove('flipCard');
+		cards[secondCard].classList.remove('flipCard');  
+		movesCounter()
+	 }
+	
+	cardChosen = [];
+	cardsChosenID = [];
+
+	if(cardsWon.length == cardsArray.length/2) {		
+		result.innerHTML = `<h2>You Won</h2> <h4>Moves: ${moveCounter}</h4>`
+		stopGame();
+	}
+}
