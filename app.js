@@ -148,7 +148,12 @@ function stopGame() {
 	card.tabIndex = 0;
 	card.addEventListener('click', flipCard);
 
-
+	card.addEventListener('keyup', function(e) {
+		if (e.key == 'Enter') {
+			flipCard()
+			}
+		});
+	});
 }
 
  function flipCard() {
