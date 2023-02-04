@@ -147,6 +147,8 @@ function stopGame() {
 	cards.forEach((card) => {
 	card.tabIndex = 0;
 	card.addEventListener('click', flipCard);
+
+
 }
 
  function flipCard() {
@@ -187,4 +189,25 @@ function checkMatch() {
 		result.innerHTML = `<h2>You Won</h2> <h4>Moves: ${moveCounter}</h4>`
 		stopGame();
 	}
+}
+
+
+
+//Timer
+function updateTimer() {
+	seconds += 1;
+	if (seconds >= 60) {
+		minutes += 1;
+		seconds = 0;
+	}
+	//formatting the time
+	const secondsValue = seconds < 10 ? '0' + seconds : seconds;
+	const minutesValue = minutes < 10 ? '0' + minutes : minutes;
+	time.innerHTML = `<span>Time:</span> ${minutesValue}:${secondsValue}`;
+}
+
+//Counting the moves
+function movesCounter() {
+	moveCounter += 1;
+	moves.innerHTML = `<span>Moves:</span> ${moveCounter}`;
 }
