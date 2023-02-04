@@ -6,7 +6,6 @@ const startButton = document.querySelector('.start-button');
 const result = document.querySelector('#result');
 const controls = document.querySelector('.controls-container');
 
-let board;
 let cardsWon = [];
 let cardChosen = [];
 let cardsChosenID = [];
@@ -17,7 +16,6 @@ let seconds = 0;
 let minutes = 0;
 //starter moves
 let moveCounter = 0;
-
 
 const cardsArray = [
 	{
@@ -139,7 +137,6 @@ function stopGame() {
 		cardContainer.setAttribute('data-id', index);
 		cardImage.setAttribute('src', `${cardsArray[index].img}`);
 
-		
 		gameContainer.appendChild(cardContainer);
 		cardContainer.appendChild(cardBack);
 		cardContainer.appendChild(cardFront);
@@ -148,6 +145,21 @@ function stopGame() {
 
 	cards = document.querySelectorAll('.card-container');
 	cards.forEach((card) => {
-	card.addEventListener('click', flipCard)
-})
+	card.tabIndex = 0;
+	card.addEventListener('click', flipCard);
 }
+
+ function flipCard() {
+	console.log(this);
+	const cardID = this.getAttribute('data-id');	
+	cardChosen.push(cardsArray[cardID].name);
+	cardsChosenID.push(cardID);
+
+	this.classList.add('flipCard')
+	
+	if (cardChosen.length === 2) {
+		setTimeout(checkMatch, 500)
+	}
+}
+
+
