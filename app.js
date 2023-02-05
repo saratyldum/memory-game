@@ -7,21 +7,16 @@ const result = document.querySelector('#result');
 const controls = document.querySelector('.controls-container');
 
 let cardsWon = [];
-let cardChosen = [];
-let cardsChosenID = [];
 let cards;
-let timerID;
+let firstCard, secondCard, firstCardID, secondCardID;
 //Starter time
+let timerID;
 let seconds = 0;
 let minutes = 0;
 //starter moves
 let moveCounter = 0;
 let lockBoard = false;
 let hasFlippedCard = false;
-let firstCard;
-let secondCard;
-let firstCardID;
-let secondCardID;
 
 const cardsArray = [
 	{
@@ -90,13 +85,15 @@ const cardsArray = [
 startButton.addEventListener('click', handleStartButtonClick);
 stopButton.addEventListener('click', handleStopButtonClick);
 
-
 function handleStartButtonClick() {
 	initializeGame();
+	shuffleCards();
+	createBoard();
 }
 
 function handleStopButtonClick() {
 	stopGame();
+	clearInterval(timerID);
 }
 
 function initializeGame() {
@@ -115,9 +112,6 @@ function initializeGame() {
 	//initial moves
 	moves.innerHTML = `<span>Moves:</span> ${moveCounter}`;
 	time.innerHTML = `<span>Time:</span> 00:00`;
-
-	shuffleCards();
-	createBoard();
 }
 
 function shuffleCards() {
@@ -129,7 +123,6 @@ function stopGame() {
 	controls.classList.remove('hide');
 	startButton.classList.remove('hide')
 	stopButton.classList.add('hide');
-	clearInterval(timerID);
 }
 
  function createBoard() {
@@ -168,8 +161,6 @@ function stopGame() {
 
 	this.classList.add('flipCard');
 
-	const cardID = this.getAttribute('data-id');	
-
 	if (!hasFlippedCard) {
 		//first click
 		hasFlippedCard = true;
@@ -180,13 +171,8 @@ function stopGame() {
 		hasFlippedCard = false;
 		secondCard = this;
 		secondCardID = this.getAttribute('data-id');
-
 		checkMatch()
 	}
-
-	// cardChosen.push(cardsArray[cardID].name);
-	// cardsChosenID.push(cardID);
-
 }
 
 function checkMatch() {
@@ -205,7 +191,7 @@ function disableCards() {
 		result.innerHTML = `<h2>You Won</h2> <h4>Moves: ${moveCounter}</h4>`
 		stopGame();
 	 }
-
+	 
 	resetBoard();
 }
 
