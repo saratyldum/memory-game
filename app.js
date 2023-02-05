@@ -86,6 +86,7 @@ startButton.addEventListener('click', handleStartButtonClick);
 stopButton.addEventListener('click', handleStopButtonClick);
 
 function handleStartButtonClick() {
+	timerID = setInterval(updateTimer, 1000);
 	initializeGame();
 	shuffleCards();
 	createBoard();
@@ -106,9 +107,6 @@ function initializeGame() {
 	startButton.classList.add('hide')
 	stopButton.classList.remove('hide');
 
-	//start timer
-	timerID = setInterval(updateTimer, 1000);
-
 	//initial moves
 	moves.innerHTML = `<span>Moves:</span> ${moveCounter}`;
 	time.innerHTML = `<span>Time:</span> 00:00`;
@@ -119,13 +117,14 @@ function shuffleCards() {
 }
 
 function stopGame() {
+	clearInterval(timerID);
 	cardsWon = [];
 	controls.classList.remove('hide');
 	startButton.classList.remove('hide')
 	stopButton.classList.add('hide');
 }
 
- function createBoard() {
+function createBoard() {
 	for (let index = 0; index < cardsArray.length; index++) {
 		const cardContainer = document.createElement('button');
 		const cardBack = document.createElement('div');
@@ -149,8 +148,7 @@ function stopGame() {
 
 	cards = document.querySelectorAll('.card-container');
 	cards.forEach((card) => {
-	card.tabIndex = 0;
-	card.addEventListener('click', flipCard);
+		card.addEventListener('click', flipCard);
 	});
 }
 
@@ -182,17 +180,20 @@ function checkMatch() {
 }
 
 function disableCards() {
-	cardsWon.push(firstCard);
-
 	firstCard.removeEventListener('click', flipCard)
 	secondCard.removeEventListener('click', flipCard)
 
-	 if(cardsWon.length == cardsArray.length/2) {		
+	checkForWin();
+	resetBoard();
+}
+
+function checkForWin() {
+	cardsWon.push(firstCard);
+
+	if(cardsWon.length == cardsArray.length/2) {		
 		result.innerHTML = `<h2>You Won</h2> <h4>Moves: ${moveCounter}</h4>`
 		stopGame();
 	 }
-	 
-	resetBoard();
 }
 
 function unFlipCards() {
