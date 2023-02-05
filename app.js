@@ -1,4 +1,5 @@
 const gameContainer = document.querySelector('.game-container');
+const highScore = document.querySelector('#highscore');
 const moves = document.querySelector('#moves-counter');
 const time = document.querySelector('#time-counter');
 const stopButton = document.querySelector('.stop-button');
@@ -11,8 +12,9 @@ let cards;
 let firstCard, secondCard, firstCardID, secondCardID;
 //Starter time
 let timerID;
-let currentTime = 20;
+let currentTime = 30;
 //starter moves
+let highscore = '';
 let moveCounter = 0;
 let lockBoard = false;
 let hasFlippedCard = false;
@@ -99,15 +101,15 @@ function handleStopButtonClick() {
 function initializeGame() {
 	gameContainer.innerHTML = "";
 	result.innerHTML = "";
-	currentTime = 20;
+	currentTime = 30;
 	moveCounter = 0;
-	seconds = 0;
-	minutes = 0;
+	highscore = highscore;
 	controls.classList.add('hide');
 	startButton.classList.add('hide')
 	stopButton.classList.remove('hide');
 
 	//initial moves
+	highScore.innerHTML = `<span>Highscore:</span> ${highscore}`;
 	moves.innerHTML = `<span>Moves:</span> ${moveCounter}`;
 	time.innerHTML = `<span>Time left:</span> ${currentTime}`;
 }
@@ -191,7 +193,8 @@ function checkForWin() {
 	cardsWon.push(firstCard);
 
 	if(cardsWon.length == cardsArray.length/2) {		
-		result.innerHTML = `<h2>You Won</h2> <h4>Moves: ${moveCounter}</h4>`
+		result.innerHTML = `<h2>You Won</h2> <h4>Moves: ${moveCounter + 1}</h4>`
+		updateHighscore();
 		stopGame();
 	 }
 }
@@ -201,7 +204,7 @@ function unFlipCards() {
 	setTimeout(() => {
 		firstCard.classList.remove('flipCard')
 		secondCard.classList.remove('flipCard')
-
+		
 		resetBoard();
 	}, 1000)
 }
@@ -210,6 +213,13 @@ function resetBoard() {
 	[hasFlippedCard, lockBoard] = [false, false];
 	[firstCard, secondCard] = [null, null];
 	movesCounter();
+}
+
+function updateHighscore() {
+	if (highscore == '' || (moveCounter < highscore)) {
+		highscore = moveCounter + 1;
+		highScore.innerHTML = `<span>Highscore:</span> ${highscore}`
+	} 
 }
 
 //Timer
