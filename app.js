@@ -11,8 +11,7 @@ let cards;
 let firstCard, secondCard, firstCardID, secondCardID;
 //Starter time
 let timerID;
-let seconds = 0;
-let minutes = 0;
+let currentTime = 20;
 //starter moves
 let moveCounter = 0;
 let lockBoard = false;
@@ -100,6 +99,7 @@ function handleStopButtonClick() {
 function initializeGame() {
 	gameContainer.innerHTML = "";
 	result.innerHTML = "";
+	currentTime = 20;
 	moveCounter = 0;
 	seconds = 0;
 	minutes = 0;
@@ -109,7 +109,7 @@ function initializeGame() {
 
 	//initial moves
 	moves.innerHTML = `<span>Moves:</span> ${moveCounter}`;
-	time.innerHTML = `<span>Time:</span> 00:00`;
+	time.innerHTML = `<span>Time left:</span> ${currentTime}`;
 }
 
 function shuffleCards() {
@@ -214,15 +214,15 @@ function resetBoard() {
 
 //Timer
 function updateTimer() {
-	seconds += 1;
-	if (seconds >= 60) {
-		minutes += 1;
-		seconds = 0;
+	currentTime--;
+	time.innerHTML = `<span>Time left:</span> ${currentTime}`;
+
+	if(currentTime === 0 ){
+		clearInterval(timerID);
+		result.innerHTML = '<h2>You lost..</h2>'
+
+		stopGame()
 	}
-	//formatting the time
-	const secondsValue = seconds < 10 ? '0' + seconds : seconds;
-	const minutesValue = minutes < 10 ? '0' + minutes : minutes;
-	time.innerHTML = `<span>Time:</span> ${minutesValue}:${secondsValue}`;
 }
 
 //Counting the moves
