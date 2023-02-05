@@ -66,6 +66,7 @@ body {
 	margin: 0 auto;
 	transform-style: preserve-3d;
 	transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	backface-visibility: hidden;
 }
 
 .card-container:focus {
@@ -107,12 +108,6 @@ body {
 	object-fit: contain;
 }
 
-.card-container.flipped .card-backside {
-	transform: rotateY(180deg);
-}
-.card-container.flipped .card-frontside {
-	transform: rotateY(0deg);
-}
 
 .matched {
 	transform: rotateY(0deg);
