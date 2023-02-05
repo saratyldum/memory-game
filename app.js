@@ -209,7 +209,21 @@ function disableCards() {
 	resetBoard();
 }
 
+function unFlipCards() {
+	lockBoard = true;
+	setTimeout(() => {
+		firstCard.classList.remove('flipCard')
+		secondCard.classList.remove('flipCard')
 
+		resetBoard();
+	}, 1000)
+}
+
+function resetBoard() {
+	[hasFlippedCard, lockBoard] = [false, false];
+	[firstCard, secondCard] = [null, null];
+	movesCounter();
+}
 
 //Timer
 function updateTimer() {
