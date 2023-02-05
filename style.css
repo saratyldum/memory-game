@@ -1,13 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 :root {
-	--primary-color: rgb(52, 124, 44)
+	--primary-color: rgb(52, 124, 44);
+	--secondary-color: #ffffff;
+	--box-shadow-color: rgba(13, 86, 0, 1);
 }
 * {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
 	font-family: 'Poppins', sans-serif;
+	color: black;
 }
 
 body {
@@ -26,9 +29,9 @@ body {
 	max-width: 500px;
 	min-width: 300px;
 	padding: 2.5rem 1.5rem;
-	background-color: white;
+	background-color: var(--secondary-color);
 	border-radius: 1rem;
-	box-shadow: 0 1rem 3rem rgba(13, 86, 0, 1);
+	box-shadow: 0 1rem 3rem var(--box-shadow-color);
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -80,6 +83,7 @@ body {
 	border: 3px solid black;
 	backface-visibility: hidden;
 	top: 0;
+	left: 0;
 }
 
 .card-backside {
@@ -90,7 +94,7 @@ body {
 }
 
 .card-frontside {
-	background-color: white;
+	background-color: var(--secondary-color);
 	transform:rotateY(180deg)
 } 
 
@@ -131,12 +135,12 @@ body {
 	display: block;
 	margin: 1.1rem auto 0 auto;
 	background-color: black;
-	color: white;
+	color: var(--secondary-color);
 }
 
 .start-button {
 	font-size: 1.3rem;
-	box-shadow: 0 0.6rem 2rem rgba(13, 86, 0, 1);
+	box-shadow: 0 0.6rem 2rem var(--box-shadow-color);
 }
 
 .hide {
