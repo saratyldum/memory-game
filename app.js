@@ -16,6 +16,12 @@ let seconds = 0;
 let minutes = 0;
 //starter moves
 let moveCounter = 0;
+let lockBoard = false;
+let hasFlippedCard = false;
+let firstCard;
+let secondCard;
+let firstCardID;
+let secondCardID;
 
 const cardsArray = [
 	{
@@ -84,6 +90,7 @@ const cardsArray = [
 startButton.addEventListener('click', handleStartButtonClick);
 stopButton.addEventListener('click', handleStopButtonClick);
 
+
 function handleStartButtonClick() {
 	initializeGame();
 }
@@ -109,8 +116,12 @@ function initializeGame() {
 	moves.innerHTML = `<span>Moves:</span> ${moveCounter}`;
 	time.innerHTML = `<span>Time:</span> 00:00`;
 
-	cardsArray.sort(() => 0.5 - Math.random());
+	shuffleCards();
 	createBoard();
+}
+
+function shuffleCards() {
+	cardsArray.sort(() => 0.5 - Math.random());
 }
 
 function stopGame() {
@@ -123,7 +134,7 @@ function stopGame() {
 
  function createBoard() {
 	for (let index = 0; index < cardsArray.length; index++) {
-		const cardContainer = document.createElement('div');
+		const cardContainer = document.createElement('button');
 		const cardBack = document.createElement('div');
 		const cardFront = document.createElement('div');
 		const cardImage = document.createElement('img');
@@ -147,53 +158,55 @@ function stopGame() {
 	cards.forEach((card) => {
 	card.tabIndex = 0;
 	card.addEventListener('click', flipCard);
-
-	card.addEventListener('keyup', function(e) {
-		if (e.key == 'Enter') {
-			flipCard()
-			}
-		});
 	});
 }
 
  function flipCard() {
-	console.log(this);
-	const cardID = this.getAttribute('data-id');	
-	cardChosen.push(cardsArray[cardID].name);
-	cardsChosenID.push(cardID);
+	if (lockBoard) return;
+	//disable double clicking
+	if (this === firstCard) return;
 
-	this.classList.add('flipCard')
-	
-	if (cardChosen.length === 2) {
-		setTimeout(checkMatch, 500)
+	this.classList.add('flipCard');
+
+	const cardID = this.getAttribute('data-id');	
+
+	if (!hasFlippedCard) {
+		//first click
+		hasFlippedCard = true;
+		firstCard = this;
+		firstCardID = this.getAttribute('data-id');
+	} else {
+		//second click
+		hasFlippedCard = false;
+		secondCard = this;
+		secondCardID = this.getAttribute('data-id');
+
+		checkMatch()
 	}
+
+	// cardChosen.push(cardsArray[cardID].name);
+	// cardsChosenID.push(cardID);
+
 }
 
 function checkMatch() {
-	 firstCard = cardsChosenID[0];
-	 secondCard = cardsChosenID[1];
+	let isMatch = cardsArray[firstCardID].name=== cardsArray[secondCardID].name;
 
-	 if (firstCard === secondCard) {
-		cards[firstCard].classList.remove('flipCard');
-		cards[secondCard].classList.remove('flipCard');  
-	 }
+	isMatch ? disableCards() : unFlipCards();
+}
 
-	 if (cardChosen[0] === cardChosen[1]) {
-		cardsWon.push(cardChosen)
-		movesCounter()
-	 } else  {
-		cards[firstCard].classList.remove('flipCard');
-		cards[secondCard].classList.remove('flipCard');  
-		movesCounter()
-	 }
-	
-	cardChosen = [];
-	cardsChosenID = [];
+function disableCards() {
+	cardsWon.push(firstCard);
 
-	if(cardsWon.length == cardsArray.length/2) {		
+	firstCard.removeEventListener('click', flipCard)
+	secondCard.removeEventListener('click', flipCard)
+
+	 if(cardsWon.length == cardsArray.length/2) {		
 		result.innerHTML = `<h2>You Won</h2> <h4>Moves: ${moveCounter}</h4>`
 		stopGame();
-	}
+	 }
+
+	resetBoard();
 }
 
 
@@ -215,4 +228,4 @@ function updateTimer() {
 function movesCounter() {
 	moveCounter += 1;
 	moves.innerHTML = `<span>Moves:</span> ${moveCounter}`;
-}
+};
