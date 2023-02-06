@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 :root {
-	--primary-color: rgb(52, 124, 44);
-	--secondary-color: #ffffff;
+	--primary-color: rgb(72, 154, 63);
+	--secondary-color: #ffffffd4;
 	--box-shadow-color: rgba(13, 86, 0, 1);
 }
 * {
@@ -87,7 +87,7 @@ body {
 }
 
 .card-backside {
-	background-color: rgb(22, 135, 2);
+	background-color: rgb(52, 170, 54);
 	font-size: 3rem;
 	font-weight: 600;
 	color: black;
@@ -129,7 +129,7 @@ body {
 	display: block;
 	margin: 1.1rem auto 0 auto;
 	background-color: black;
-	color: var(--secondary-color);
+	color: #fff;
 }
 
 .start-button {
@@ -143,6 +143,7 @@ body {
 
 #result {
 	text-align: center;
+	padding: 0 1rem;
 }
 
 #result h2 {
