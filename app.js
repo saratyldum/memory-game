@@ -192,10 +192,12 @@ function disableCards() {
 function checkForWin() {
 	cardsWon.push(firstCard);
 
-	if(cardsWon.length == cardsArray.length/2) {		
-		result.innerHTML = `<h2>You Won</h2> <h4>Moves: ${moveCounter + 1}</h4>`
-		updateHighscore();
-		stopGame();
+	if(cardsWon.length == cardsArray.length/2) {	
+		setTimeout(() => {
+			result.innerHTML = `<h2>You Won</h2> <h4>Moves: ${moveCounter + 1}</h4>`
+			updateHighscore();
+			stopGame();
+		}, 1500);	
 	 }
 }
 
